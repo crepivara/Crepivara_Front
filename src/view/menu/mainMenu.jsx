@@ -118,7 +118,7 @@ export default function MainMenu() {
         </div>
       </section>
 
-      <div className="row container-fluid justify-content-center mt-5 mb-5">
+      <div className="row container-fluid justify-content-center mt-5">
         {filteredProducts.map((item) => (
           <div key={item.id} className="col-12 col-md-3 mt-3">
             <CardMenu
