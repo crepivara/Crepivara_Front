@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { getRecommended } from "../js/menu/menu";
 import CardMenu from "../components/cards/CardMenu";
+import { FaRegHeart } from "react-icons/fa";
+import { BsStars } from "react-icons/bs";
+import { IoShieldCheckmark } from "react-icons/io5";
+import { IoIosRocket } from "react-icons/io";
 
 export default function Home() {
   // Asegúrate de que apunten a rutas válidas en tu carpeta "public/images"
@@ -176,7 +180,10 @@ export default function Home() {
         </svg>
       </div>
 
-      <section className="container-fluid py-5 destacados-section" id="recommendations">
+      <section
+        className="container-fluid py-5 destacados-section"
+        id="recommendations"
+      >
         <div className="container">
           <div className="row mb-5">
             <div className="col-12">
@@ -192,19 +199,19 @@ export default function Home() {
 
           <div className="row g-4 justify-content-center">
             {CREPAS.map((item, index) => (
-              <div key={item.id} className="col-12 col-md-3 mt-3">
-            <CardMenu
-              nombre={item.nombre}
-              descripcion={item.descripcion}
-              precio={item.precio}
-              imagenes={item.imagenes}
-              ingredientes={item.ingredientes}
-              disponible={item.disponible}
-              categoria={item.categoria}
-              id={item.id}
-              className="mt-3 mb-3"
-            />
-          </div>
+              <div key={item.id} className="col-12 col-md-3 mt-3" data-aos="flip-left">
+                <CardMenu
+                  nombre={item.nombre}
+                  descripcion={item.descripcion}
+                  precio={item.precio}
+                  imagenes={item.imagenes}
+                  ingredientes={item.ingredientes}
+                  disponible={item.disponible}
+                  categoria={item.categoria}
+                  id={item.id}
+                  className="mt-3 mb-3"
+                />
+              </div>
             ))}
           </div>
 
@@ -277,6 +284,163 @@ export default function Home() {
           <path
             fill="var(--background-color-2"
             d="M 1395 167 C 1460.5 167 1460.5 0 1526 0 L 1526 0 L 1526 0 L 1395 0 Z"
+            strokeWidth="0"
+          ></path>
+        </svg>
+      </div>
+
+      <section className="mt-5">
+        <div className="container-fluid">
+          <div className="row justify-content-center">
+            <div className="col-12">
+              <div className="feedback-section">
+                <div className="floating-elements">
+                  <div className="floating-element"></div>
+                  <div className="floating-element"></div>
+                  <div className="floating-element"></div>
+                  <div className="floating-element"></div>
+                </div>
+
+                <div className="feedback-header">
+                  <div className="icon">
+                    <FaRegHeart/>
+                  </div>
+                  <h2 className="feedback-title">Ayúdanos a Mejorar</h2>
+                  <p className="feedback-subtitle">
+                    Tu opinión es valiosa para nosotros
+                  </p>
+                </div>
+
+                <div className="feedback-content">
+                  <p className="feedback-description">
+                    Queremos ofrecerte la mejor experiencia posible. Comparte tu
+                    opinión y ayúdanos a crear algo increíble juntos.
+                  </p>
+
+                  <div className="feedback-features" data-aos="flip-right">
+                    <div className="feature-card">
+                      <div className="feature-icon">
+                        <BsStars />
+                      </div>
+                      <h4 className="feature-title">Solo 3 minutos</h4>
+                      <p className="feature-text">
+                        Una encuesta rápida y sencilla que no te quitará mucho
+                        tiempo
+                      </p>
+                    </div>
+
+                    <div className="feature-card" data-aos="flip-right">
+                      <div className="feature-icon">
+                        <IoShieldCheckmark />
+                      </div>
+                      <h4 className="feature-title">100% Anónimo</h4>
+                      <p className="feature-text">
+                        Tus respuestas son completamente privadas y
+                        confidenciales
+                      </p>
+                    </div>
+
+                    <div className="feature-card" data-aos="flip-right">
+                      <div className="feature-icon">
+                        <IoIosRocket />
+                      </div>
+                      <h4 className="feature-title">Impulsa mejoras</h4>
+                      <p className="feature-text">
+                        Tu feedback nos ayuda a implementar funciones que
+                        realmente necesitas
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="cta-container">
+                    <a
+                      href="https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__plRoXFUQ0tUN1pWMEhWR0lWUTU0R1BSUlNVMzBVUC4u&origin=QRCode&route=shorturl"
+                      className="cta-button"
+                    >
+                      <i className="fas fa-comment-dots"></i>
+                      Participar en la Encuesta
+                    </a>
+                  </div>
+
+                  <div className="feedback-note">
+                    <p className="feedback-note-text">
+                      <i className="fas fa-info-circle"></i>
+                      Cada respuesta cuenta y nos ayuda a mejorar continuamente
+                      nuestro servicio para ti.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="container-fluid wave3">
+        <svg viewBox="0 0 1920 200" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill="var(--background-color-1)"
+            d="M 0 0 C 65 0 65 168 130 168 L 130 168 L 130 0 L 0 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 129 168 C 195.5 168 195.5 29 262 29 L 262 29 L 262 0 L 129 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 261 29 C 380.5 29 380.5 135 500 135 L 500 135 L 500 0 L 261 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 499 135 C 583 135 583 81 667 81 L 667 81 L 667 0 L 499 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 666 81 C 734.5 81 734.5 22 803 22 L 803 22 L 803 0 L 666 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 802 22 C 927 22 927 140 1052 140 L 1052 140 L 1052 0 L 802 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 1051 140 C 1101 140 1101 110 1151 110 L 1151 110 L 1151 0 L 1051 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 1150 110 C 1204.5 110 1204.5 149 1259 149 L 1259 149 L 1259 0 L 1150 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 1258 149 C 1312 149 1312 129 1366 129 L 1366 129 L 1366 0 L 1258 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 1365 129 C 1394.5 129 1394.5 110 1424 110 L 1424 110 L 1424 0 L 1365 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 1423 110 C 1464 110 1464 71 1505 71 L 1505 71 L 1505 0 L 1423 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 1504 71 C 1617.5 71 1617.5 113 1731 113 L 1731 113 L 1731 0 L 1504 0 Z"
+            strokeWidth="0"
+          ></path>
+          <path
+            fill="var(--background-color-1)"
+            d="M 1730 113 C 1820 113 1820 0 1910 0 L 1910 0 L 1910 0 L 1730 0 Z"
             strokeWidth="0"
           ></path>
         </svg>

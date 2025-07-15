@@ -1,4 +1,4 @@
-// src/App.js
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import AdminLayout from "./layout/AdminLayout";
 import UserLayout from "./layout/UserLayout";
@@ -9,6 +9,8 @@ import AdminHome from "./view/admin/AdminHome";
 import OrderHome from "./view/order/OrderHome";
 import ScrollConfig from "./js/ScrollConfig";
 import AboutUs from "./view/aboutUs/AboutUs";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 import "./index.css";
 import MainMenu from "./view/menu/mainMenu";
@@ -50,7 +52,6 @@ const bloquedTime = () => {
 
   // Si se definió hora de apertura, parsearla:
   if (openingHourStr) {
-    // Puede ser "HH" o "HH:MM"
     const partesHora = openingHourStr.split(':');
     const hora = Number(partesHora[0]);
     const minuto = partesHora.length > 1 ? Number(partesHora[1]) : 0;
@@ -58,10 +59,8 @@ const bloquedTime = () => {
       fechaObj.setHours(hora, minuto, 0, 0);
     } else {
       console.warn('Formato inválido en REACT_APP_OPENING_HOUR:', openingHourStr);
-      // dejamos la fechaObj a medianoche
     }
   } else {
-    // opcional: si quieres una hora por defecto, p.ej. 00:00 o 10:00:
     fechaObj.setHours(0, 0, 0, 0);
   }
 
@@ -70,14 +69,11 @@ const bloquedTime = () => {
 };
 
 // Un componente guard genérico para rutas públicas/privadas
-// Recibe: element: JSX.Element que se quiere renderizar, authRequired: boolean
 const RouteGuard = ({ element, authRequired = false }) => {
   const blocked = bloquedTime();
   if (blocked) {
-    // Si aún estamos bloqueados, redirigir siempre a /timecount
     return <Navigate to="/timecount" replace />;
   }
-  // No estamos bloqueados: permitir o rechazar por autenticación
   if (authRequired && !isAuthenticated()) {
     return <Navigate to="/login" replace />;
   }
@@ -92,42 +88,34 @@ const AdminLayoutWrapper = () => (
 );
 
 function App() {
+  // Inicializar AOS al montar la aplicación:
+  useEffect(() => {
+    AOS.init({
+      duration: 2000,  // Animación más lenta (2 segundos)
+      offset: 120,
+      once: true,      // Ejecutar la animación solo una vez
+      mirror: false,
+    });
+    // Si necesitas refrescar en contenido dinámico:
+    // AOS.refresh();
+  }, []);
+
   return (
     <Router>
       <ScrollConfig />
       <Routes>
-        {/* Ruta para TimeCounter: si ya pasó la fecha, redirigimos a "/" */}
-        <Route
-          path="/timecount"
-          element={<TimeCounter/>}
-        />
+        <Route path="/timecount" element={<TimeCounter />} />
 
-        {/* Rutas públicas bajo UserLayout */}
-        <Route
-          element={<RouteGuard element={<UserLayout />} authRequired={false} />}
-        >
-          <Route
-            path="/"
-            element={<Home />}
-          />
-          <Route
-            path="/menu"
-            element={<MainMenu />}
-          />
-          <Route
-            path="/orders"
-            element={<OrderHome />} // Aquí podrías poner un componente de órdenes si lo tienes
-          />
-          <Route
-          path="/aboutus"
-          element={<AboutUs/>}
-          />
+        <Route element={<RouteGuard element={<UserLayout />} authRequired={false} />}>  
+          <Route path="/" element={<Home />} />
+          <Route path="/menu" element={<MainMenu />} />
+          <Route path="/orders" element={<OrderHome />} />
+          <Route path="/aboutus" element={<AboutUs />} />
         </Route>
-        {/* Rutas de autenticación */}
+
         <Route path="/login" element={
-          // Si ya pasó el tiempo y ya autenticado, quizá redirigir al home o admin?
           bloquedTime()
-            ? <Login />  // Si antes de apertura, quizá no debería dejar login; pero puedes decidir: quizá permitir ver login para probar?
+            ? <Login />
             : isAuthenticated()
               ? <Navigate to="/" replace />
               : <Login />
@@ -140,26 +128,15 @@ function App() {
               : <Register />
         } />
 
-        {/* Rutas privadas bajo AdminLayout */}
-        <Route
-          path="/home-admin/*"
-          element={<RouteGuard element={<AdminLayoutWrapper />} authRequired={true} />}
-        >
+        <Route path="/home-admin/*" element={<RouteGuard element={<AdminLayoutWrapper />} authRequired={true} />}>
           <Route index element={<AdminHome />} />
-          {/* Otras subrutas admin: */}
-          {/* <Route path="settings" element={<AdminSettings />} /> */}
         </Route>
 
-        {/* Si ninguna ruta hace match, redirigir: 
-            Si bloqueado, a /timecount; si no, a "/" o login según convenga */}
-        <Route
-          path="*"
-          element={
-            bloquedTime()
-              ? <Navigate to="/timecount" replace />
-              : <Navigate to="/" replace />
-          }
-        />
+        <Route path="*" element={
+          bloquedTime()
+            ? <Navigate to="/timecount" replace />
+            : <Navigate to="/" replace />
+        } />
       </Routes>
     </Router>
   );
