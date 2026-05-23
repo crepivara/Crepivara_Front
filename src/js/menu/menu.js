@@ -37,7 +37,7 @@ export function getMenu() {
     id: 8,
     nombre: "CAPIDULZURA",
     descripcion: "Delicada crepa que combina melocotón jugoso, fresas frescas y Nutella, con un suave helado que intensifica su dulce ternura.",
-    precio: 4.400,
+    precio: 4400,
     imagenes: ["/images/menuImages/crepas/CrepiDulzura1.webp"],
     ingredientes: ["Melocotón", "Fresa", "Helado", "Nutella"],
     disponible: true,
